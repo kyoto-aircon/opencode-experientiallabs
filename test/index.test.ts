@@ -254,9 +254,13 @@ test("no credential → integration registered, provider transform adds nothing,
   }
 })
 
-// Final fix wave (Minor 4): pin the integration transform's method payload.
-// The /connect API contract {key, answer:{apiKey}} depends on the form field
-// key being exactly "apiKey" — a rename here silently breaks key paste.
+// Fix (double key prompt): pin the integration transform's method payload.
+// The TUI key flow renders any method.form FIRST (formAnswer) and THEN always
+// renders its own hardcoded "API key" prompt — that hardcoded prompt is where
+// the secret (input.key) actually comes from; form answers only land in
+// auxiliary `configuration` (host: Integration.connection.key). A key-method
+// form must therefore NEVER ask for the key itself, or the user pastes the
+// key twice. Contract: key method, no form, label present.
 test("integration transform publishes the /connect key-paste method payload", async () => {
   delete process.env.EXPLABS_API_KEY
   const { ctx, captured } = mockCtx({ active: () => undefined })
@@ -276,11 +280,8 @@ test("integration transform publishes the /connect key-paste method payload", as
     const payload = methods[0]
     assert.equal(payload.integrationID, "experiential")
     assert.equal(payload.method.type, "key")
-    const form = payload.method.form as Array<Record<string, any>>
-    assert.ok(
-      form.some((f) => f.key === "apiKey" && f.required === true),
-      'the /connect contract depends on a required form field keyed "apiKey"',
-    )
+    assert.equal(payload.method.form, undefined, "key method must not carry a form — the TUI already prompts for the key itself; a form asking for the key makes /connect prompt twice")
+    assert.equal(typeof payload.method.label, "string", "key method keeps a label (shows as the prompt title)")
     await tick() // post-setup refresh: no credential → returns before any load
     assert.equal(fetches.count, 0, "integration registration is purely local")
   } finally {

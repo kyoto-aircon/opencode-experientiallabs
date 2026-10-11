@@ -78,6 +78,6 @@ bundles its own runtime. Node is only needed to run the test suite.
 
 ## Related
 
-`epicawesomesauce/explabs-provider-plugin` integrates the same gateway into
+`kyoto-aircon/explabs-provider-plugin` integrates the same gateway into
 Hermes Agent (Python); the gateway API shapes and quirks documented there
 apply here too.

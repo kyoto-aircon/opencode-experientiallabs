@@ -18,7 +18,7 @@ An [OpenCode](https://opencode.ai) V2 plugin that adds Experiential Labs as a mo
 **From GitHub (canonical):**
 
 ```
-opencode plugin add github:epicawesomesauce/opencode-experientiallabs
+opencode plugin add github:kyoto-aircon/opencode-experientiallabs
 ```
 
 > Requires an OpenCode **v2** CLI — check with `opencode --version`. The v1 CLI (`opencode-ai` ≤ 1.18.x) has no `plugin add` subcommand and treats `add` as an npm package name, silently installing an unrelated package.
@@ -29,7 +29,7 @@ Refresh after new commits with `opencode plugin update`.
 
 ```jsonc
 {
-  "plugins": ["github:epicawesomesauce/opencode-experientiallabs"]
+  "plugins": ["github:kyoto-aircon/opencode-experientiallabs"]
 }
 ```
 
@@ -51,7 +51,7 @@ The gateway base URL defaults to `https://api.experientiallabs.ai/v1`. Override 
 {
   "plugins": [
     {
-      "package": "github:epicawesomesauce/opencode-experientiallabs",
+      "package": "github:kyoto-aircon/opencode-experientiallabs",
       "options": { "baseURL": "http://127.0.0.1:8000/v1" }
     }
   ]

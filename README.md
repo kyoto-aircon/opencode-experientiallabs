@@ -62,7 +62,7 @@ The gateway base URL defaults to `https://api.experientiallabs.ai/v1`. Override 
 
 Two flows; the connection wins when both are present:
 
-1. **`/connect`** — run `/connect`, select **Experiential**, paste your `xpl_...` API key (the integration registers a key-paste method with an `apiKey` form field). The key is stored server-side as a credential and the provider is registered with `sourceConnection`.
+1. **`/connect`** — run `/connect`, select **Experiential**, paste your `xpl_...` API key when prompted (a plain key-paste method — the TUI itself prompts for the key; the method registers no form, or the key would be asked for twice). The key is stored server-side as a credential and the provider is registered with `sourceConnection`.
 2. **Environment fallback** — set `EXPLABS_API_KEY`, used when no connection exists. It must be visible to the OpenCode server process: desktop apps inherit user-scoped env vars; in CLI contexts export it in the launching shell.
 
 ## Behavior notes

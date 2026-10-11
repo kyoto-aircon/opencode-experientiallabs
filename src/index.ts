@@ -18,6 +18,13 @@ export default Plugin.define({
     // 1) Integration (Amendment 2) — registered UNCONDITIONALLY so "Experiential"
     //    appears in /connect with a key-paste method even before any credential
     //    exists; that is how users paste the xpl_ key in the first place.
+    //    NO form on the key method: the TUI key flow renders any method.form
+    //    first and THEN always renders its own hardcoded "API key" prompt
+    //    (that hardcoded prompt is where the secret actually comes from — form
+    //    answers only become auxiliary `configuration` in the stored
+    //    credential). A form asking for the key itself makes /connect prompt
+    //    for the key twice. Host built-ins (xai, models-dev) register key
+    //    methods formless the same way.
     await ctx.integration.transform((editor) => {
       editor.update("experiential", (integration) => {
         integration.name = "Experiential"
@@ -27,17 +34,6 @@ export default Plugin.define({
         method: {
           type: "key",
           label: "API key",
-          form: [
-            {
-              type: "string",
-              key: "apiKey",
-              title: "API key",
-              description:
-                "Experiential Labs API key (starts with xpl_). Falls back to the EXPLABS_API_KEY environment variable.",
-              placeholder: "xpl_...",
-              required: true,
-            },
-          ],
         },
       })
     })
